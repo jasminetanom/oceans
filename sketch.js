@@ -1190,8 +1190,8 @@ function Animation12() {
     pop();
   }
 
-  this.mousePressed = function() {
-    this.sceneManager.showNextScene();
-  }
+  // this.mousePressed = function() {
+  //   this.sceneManager.showNextScene();
+  // }
 
 }
