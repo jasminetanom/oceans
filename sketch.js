@@ -63,6 +63,7 @@ function setup() {
 
   // Preload scenes. Preloading is normally optional
   // ... but needed if showNextScene() is used.
+  mgr.addScene(Animation0);
   mgr.addScene(Animation1);
   mgr.addScene(Animation2);
   mgr.addScene(Animation3);
@@ -74,7 +75,9 @@ function setup() {
   mgr.addScene(Animation9);
   mgr.addScene(Animation10);
   mgr.addScene(Animation11);
-  // mgr.addScene(Animation12);
+  mgr.addScene(Animation12);
+  // mgr.addScene(Animation13);
+
 
   mgr.showNextScene();
 }
@@ -87,61 +90,74 @@ function mousePressed() {
   mgr.handleEvent("mousePressed");
 }
 
-function keyPressed() {
-  // You can optionaly handle the key press at global level...
-  switch (key) {
-    case '1':
-      mgr.showScene(Animation1);
-      break;
-    case '2':
-      mgr.showScene(Animation2);
-      break;
-    case '3':
-      mgr.showScene(Animation3);
-      break;
-    case '4':
-      mgr.showScene(Animation4);
-      break;
-    case '5':
-      mgr.showScene(Animation5);
-      break;
-    case '6':
-      mgr.showScene(Animation6);
-      break;
-    case '7':
-      mgr.showScene(Animation7);
-      break;
-    case '8':
-      mgr.showScene(Animation8);
-      break;
-    case '9':
-      mgr.showScene(Animation9);
-      break;
-    case '10':
-      mgr.showScene(Animation10);
-      break;
-    case '11':
-      mgr.showScene(Animation11);
-      break;
-  }
-
-  // ... then dispatch via the SceneManager.
-  mgr.handleEvent("keyPressed");
-
-
-}
-
 
 // =============================================================
 // =                         BEGIN SCENES                      =
 // =============================================================
+function Animation0() {
+
+  this.draw = function() {
+    background(0, 160, 176);
+
+    push();
+    noStroke();
+    fill(237, 201, 81);
+    textSize(36);
+    textFont(anton);
+    text("WHAT HAVE", 80, 231);
+    text("WE DONE", 80, 269);
+    text("TO OUR", 80, 307);
+    text("OCEANS?", 80, 345);
+    pop();
+
+    push();
+    noStroke();
+    fill("white");
+    textSize(18);
+    text("Find out by clicking 'next'", 80, 375);
+    text("whenever the button appears.", 80, 400);
+    pop();
+
+    push();
+    noStroke();
+    fill("black");
+    rect(80, 425, 70, 30);
+
+    push();
+    fill("white");
+    textSize(16);
+    text("next >", 90, 445);
+    pop();
+
+    pop();
+
+  }
+
+  this.mousePressed = function() {
+    if ((mouseX > 80) && (mouseX < 150) && (mouseY > 425) && (mouseY < 445)) {
+      this.sceneManager.showNextScene();
+    }
+  }
+
+}
+
 function Animation1() {
+  var start_1;
+
   this.setup = function() {
     background(255);
     data_year = 0;
+    start_1 = frameCount;
   }
 
   this.draw = function() {
+    if (data_year == 0) {
+      push();
+      noStroke();
+      fill("white");
+      rect(0, 0, 550, 600);
+      pop();
+    }
 
     push();
     noStroke();
@@ -154,7 +170,7 @@ function Animation1() {
     text("OUR OCEANS.", 80, 345);
     pop();
 
-    new_fc = frameCount - 4;
+    new_fc = frameCount - start_1 - 4;
 
     var level_line = sea_level_data[new_fc + 2];
     var temp_line = sea_temp_data[new_fc + 8];
@@ -230,12 +246,12 @@ function Animation1() {
       noStroke();
       fill(204, 51, 63);
       ellipse(473, 446, 40, 40);
-      // var delta = 132 * cur_temp;
+
       var delta = 100 * cur_temp;
       rect(466, 275 - delta, 15, 162 + delta);
       rect
       fill(0);
-      // textFont(merriweather);
+
       textSize(12);
       text("0", 530, 270);
       text("+1", 530, 270 - 132 + 2);
@@ -255,7 +271,6 @@ function Animation1() {
     pop();
 
     pop();
-
 
     push();
     stroke(0);
@@ -340,14 +355,14 @@ function Animation1() {
     noStroke();
     fill(0);
     textSize(16);
-    text("J          F          M          A         M           J           J           A           S          O          N         D", 0, 490);
+    text(" J        F       M        A        M         J         J         A        S        O        N      D", 0, 490);
     pop();
 
     push();
     noStroke();
     fill(255);
     textSize(16);
-    text("        -90      -80     -70     -60      -50     -40     -30     -20     -10         0   (%)", 0, 520);
+    text("       -90     -80    -70     -60     -50     -40    -30     -20     -10        0  (%)", 0, 520);
 
     pop();
 
@@ -359,7 +374,7 @@ function Animation1() {
 
       push();
       fill("white");
-      textSize(18);
+      textSize(16);
       text("next >", 90, 375);
       pop();
 
@@ -395,7 +410,7 @@ function Animation2() {
     text("WE'VE", 80, 231);
     text("THROWN GARBAGE", 80, 269);
     text("INTO OUR SEAS", 80, 307);
-    text("AND RIVERS.", 80, 345);
+    text("AND RIVERS ...", 80, 345);
     pop();
 
     push();
@@ -404,19 +419,20 @@ function Animation2() {
     textSize(18);
     text("Hard to believe, but this is a tributary", 80, 375);
     text("of the Pasig River in Manila, Phillipines.", 80, 400);
-    text("The trash here eventually empties into the ocean.", 80, 425);
+    text("All the trash here eventually", 80, 425);
+    text("empties into the ocean.", 80, 450);
     pop();
 
     if (frameCount - start_2 > 120) {
       push();
       noStroke();
       fill("black");
-      rect(80, 450, 70, 30);
+      rect(80, 475, 70, 30);
 
       push();
       fill("white");
-      textSize(18);
-      text("next >", 90, 470);
+      textSize(16);
+      text("next >", 90, 495);
       pop();
 
       pop();
@@ -424,7 +440,7 @@ function Animation2() {
   }
 
   this.mousePressed = function() {
-    if ((mouseX > 80) && (mouseX < 150) && (mouseY > 450) && (mouseY < 470)) {
+    if ((mouseX > 80) && (mouseX < 150) && (mouseY > 475) && (mouseY < 495)) {
       this.sceneManager.showNextScene();
     }
   }
@@ -466,12 +482,13 @@ function Animation3() {
 
     if (frameCount - start_3 > 120) {
       push();
+      noStroke();
       fill("black");
       rect(80, 450, 70, 30);
 
       push();
       fill("white");
-      textSize(18);
+      textSize(16);
       text("next >", 90, 470);
       pop();
 
@@ -618,7 +635,7 @@ function Animation4() {
     text("2013", width - 65, height - 25);
 
     text("Overexploited", 300, 100);
-    text("Fully exploited", 400, 340);
+    text("Fully exploited", 380, 340);
     text("Not yet fully exploited", 170, 500);
 
 
@@ -634,13 +651,13 @@ function Animation4() {
 
     push();
     noStroke();
-    fill("red");
+    fill(204,51,63);
     rect(fish_x, 10, 17, fish_over_y);
     pop();
 
     push();
     noStroke();
-    fill("pink");
+    fill(235,104,65);
     rect(fish_x, fish_over_y, 17, fish_full_y);
     pop();
 
@@ -658,7 +675,7 @@ function Animation4() {
 
       push();
       fill("white");
-      textSize(18);
+      textSize(16);
       text("next >", 90, 375);
       pop();
 
@@ -704,7 +721,7 @@ function Animation5() {
 
     push();
     fill("white");
-    textSize(18);
+    textSize(16);
     text("next >", 90, 445);
     pop();
 
@@ -717,8 +734,6 @@ function Animation5() {
       this.sceneManager.showNextScene();
     }
   }
-
-
 }
 
 function Animation6() {
@@ -738,7 +753,7 @@ function Animation6() {
     noStroke();
     fill("white");
     textSize(16);
-    text("Threats to the Hawaiian monk seal include entanglement\nwith fishing gear, lack of food, loss of breeding areas\ndue to erosion and disease. In the Mediterranean, coastal\ndevelopment and human interactions can displace the\nseals from their habitat. People have also hunted them\nfor their oil, and to reduce competition with our fishing,\nas monk seals eat commercially important fish\nand other animals. ", 80, 375);
+    text("Threats to the Hawaiian monk seal include\nentanglement with fishing gear, lack of food, loss\nof breeding areas due to erosion and disease.\nIn the Mediterranean, coastal development and\nhuman interactions can displace the seals from\ntheir habitat. People have also hunted them\nfor their oil, and to reduce competition with\nour fishing, as monk seals eat commercially\nimportant fish and other animals. ", 80, 375);
     pop();
 
     push();
@@ -748,7 +763,7 @@ function Animation6() {
 
     push();
     fill("white");
-    textSize(18);
+    textSize(16);
     text("next >", 410, 570);
     pop();
 
@@ -783,7 +798,7 @@ function Animation7() {
     fill("white");
     textSize(16);
 
-    text("The White Abalone's California population collapsed\nalmost two decades before it was listed, not long after a\ncommercial fishery for the shelled mollusk opened in \nthe 1970s. The species still hasn't recovered, largely\nbecause males and females ofthe sedentary abalones\nneed to be in close proximity in order to reproduce\n—a difficult task when there aren't many abalones out\nthere in the first place.", 80, 375)
+    text("The White Abalone's California population\ncollapsed almost two decades before it was listed,\nnot long after a commercial fishery for the shelled\nmollusk opened in the 1970s. The species still\nhasn't recovered, largely because males and\nfemales of the sedentary abalones need to be in\nclose proximity in order to reproduce—\na difficult task when there aren't many abalones\nout there in the first place.", 80, 375)
 
     pop();
     push();
@@ -793,7 +808,7 @@ function Animation7() {
 
     push();
     fill("white");
-    textSize(18);
+    textSize(16);
     text("next >", 410, 570);
     pop();
 
@@ -829,7 +844,7 @@ function Animation8() {
     textSize(16);
 
 
-    text("In the 1940s, the short-tailed albatross population\nplummeted from tens of millions to such a small number\nthat they were believed to be extinct. Their decline was\ndue to hunting for their feathers and damage to their\nbreeding islands from volcanic activity. Today they aren't\nhunted, but along with other albatross species, they\nare often caught mistakenly by longline fishing gear\nand can mistake plastic for food. In 2008, it was\nestimated that only 2,000 of the birds remained.", 80, 375)
+    text("In the 1940s, their population plummeted\nfrom tens of millions to such a small number\nthat they were believed to be extinct. Their\ndecline was due to hunting for their feathers\nand damage to their breeding islands. Along with\nother albatross species, they are often caught\nmistakenly by longline fishing gear and can\nmistake plastic for food. In 2008, it was estimated\nthat only 2,000 of the birds remained.", 80, 375)
 
     pop();
     push();
@@ -839,7 +854,7 @@ function Animation8() {
 
     push();
     fill("white");
-    textSize(18);
+    textSize(16);
     text("next >", 410, 570);
     pop();
 
@@ -873,7 +888,7 @@ function Animation9() {
     fill("white");
     textSize(16);
 
-    text("Johnson's seagrass is the lone ocean plant listed under\nthe Endangered Species Act. Its flowing green stalks\nplay an important role in coastal ecosystems where \nthey act as nursery grounds for small larval fish, and\nare eaten by the also-endangered West Indian manatee\nand green sea turtle. Already the rarest seagrass in the\nU.S. due to its limited distribution, it is threatened by\ndisturbance from boats, dredging, storm waves, and\npoor water quality.", 80, 375)
+    text("The flowing green stalks of Johnson's seagrass\nplay an important role in coastal ecosystems\nwhere they act as nursery grounds for small\nlarval fish, and are eaten by the also-endangered\nWest Indian manatee and green sea turtle.\nAlready the rarest seagrass in the U.S. due to\nits limited distribution, it is threatened by\ndisturbance from boats, dredging, storm waves,\nand poor water quality.", 80, 375)
 
     pop();
 
@@ -884,7 +899,7 @@ function Animation9() {
 
     push();
     fill("white");
-    textSize(18);
+    textSize(16);
     text("next >", 410, 570);
     pop();
 
@@ -919,7 +934,7 @@ function Animation10() {
     textSize(16);
 
 
-    text("All six of the species of sea turtles that are found in U.S.\nwaters are listed as endangered under the ESA. Sea\n turtles face a variety of threats in both the ocean (like\nentanglement in fishing gear) and on land (such as \nartificial lights confusing newborn hatchlings).", 80, 375)
+    text("All six of the species of sea turtles found in U.S.\nwaters are listed as endangered under the\nEndangered Species Act. Sea turtles face a\nvariety of threats in both the ocean (like getting\n entangled in fishing gear) and on land (such as\nartificial lights confusing newborn hatchlings).", 80, 375)
 
     pop();
 
@@ -930,7 +945,7 @@ function Animation10() {
 
     push();
     fill("white");
-    textSize(18);
+    textSize(16);
     text("next >", 410, 570);
     pop();
 
@@ -1069,10 +1084,133 @@ function Animation11() {
     textSize(36);
     textFont(anton);
     text("MAYBE, JUST MAYBE,", 80, 227);
-    text("WE COULD BE", 80, 264);
+    text("WE COULD BE, SHOULD BE", 80, 264);
     text("MORE MINDFUL OF", 80, 303);
     text("SOME THINGS WE DO?", 80, 340);
     pop();
 
+
+    push();
+    noStroke();
+    fill("black");
+    rect(400, 310, 70, 30);
+    pop
+    push();
+    fill("white");
+    textSize(16);
+    text("next >", 410, 330);
+    pop();
+    pop();
+
   }
+
+  this.mousePressed = function() {
+    if ((mouseX > 400) && (mouseX < 470) && (mouseY > 320) && (mouseY < 340)) {
+      this.sceneManager.showNextScene();
+    }
+  }
+}
+
+// function Animation11() {
+//
+//   this.draw = function() {
+//     background(0, 160, 176);
+//
+//     push();
+//     noStroke();
+//     fill(237, 201, 81);
+//     textSize(24);
+//     textFont(anton);
+//
+//
+//     text("With every drop of water you drink,", 80, 215);
+//     text("every breath you take,", 80, 245);
+//     text("you're connected to the sea.", 80, 275);
+//     text("No matter where on Earth you live.", 80, 305);
+//     text("Most of the oxygen in the atmosphere", 80, 335);
+//     text("is generated by the sea.", 80, 365);
+//     pop();
+//
+//     push();
+//     noStroke();
+//     fill("white");
+//     textSize(18);
+//     // text("Find out by clicking 'next'", 80, 375);
+//     text("-- Sylvia Earle, Oceanographer", 80, 400);
+//     pop();
+//
+//     push();
+//     noStroke();
+//     fill("black");
+//     rect(80, 425, 70, 30);
+//
+//     push();
+//     fill("white");
+//     textSize(16);
+//     text("next >", 90, 445);
+//     pop();
+//
+//     pop();
+//
+//   }
+//
+//   this.mousePressed = function() {
+//     if ((mouseX > 80) && (mouseX < 150) && (mouseY > 425) && (mouseY < 445)) {
+//       this.sceneManager.showNextScene();
+//     }
+//   }
+//
+// }
+
+function Animation12() {
+
+  this.draw = function() {
+    background(0, 160, 176);
+
+    push();
+    noStroke();
+    fill(237, 201, 81);
+    textSize(24);
+    textFont(anton);
+
+    // "With every drop of water you drink, every breath you take,  No matter where on Earth you live. Most of the oxygen in the atmosphere is generated by the sea."
+
+
+    text("I hope for your help,", 80, 215);
+    text("to explore and protect the wild ocean", 80, 245);
+    text("in ways that will restore the health and,", 80, 275);
+    text("in so doing, secure hope for humankind.", 80, 305);
+    text("Health to the ocean means health for us.", 80, 335);
+    // text("is generated by the sea.", 80, 365);
+    pop();
+
+    push();
+    noStroke();
+    fill("white");
+    textSize(18);
+    // text("Find out by clicking 'next'", 80, 375);
+    text("-- Sylvia Earle, Oceanographer", 80, 370);
+    pop();
+
+    // push();
+    // noStroke();
+    // fill("black");
+    // rect(80, 425, 70, 30);
+    //
+    // push();
+    // fill("white");
+    // textSize(16);
+    // text("next >", 90, 445);
+    // pop();
+    //
+    // pop();
+
+  }
+
+  // this.mousePressed = function() {
+  //   if ((mouseX > 80) && (mouseX < 150) && (mouseY > 425) && (mouseY < 445)) {
+  //     this.sceneManager.showNextScene();
+  //   }
+  // }
+
 }
